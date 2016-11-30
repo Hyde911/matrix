@@ -1,9 +1,15 @@
 /Common/bin
 /Common/obj
+/Common.Tests/bin
+/Common.Tests/obj
 /Consumer/bin
 /Consumer/obj
 /Producer/bin
 /Producer/obj
 /Consumer.Tests/bin
 /Consumer.Tests/obj
+/DataGenerator/bin
+/DataGenerator/obj
+/DataGenerator.Tests/bin
+/DataGenerator.Tests/obj
 /.vs/
