@@ -1,13 +1,28 @@
-﻿namespace Consumer
+﻿using Consumer.MQ;
+using DataGenerator.Container;
+using System;
+
+namespace Consumer
 {
     class Program
     {
         static void Main(string[] args)
         {
-            using (Worker worker = new Worker())
+            MatrixContainer container;
+            try
             {
-                worker.Receive();
+                container = new MatrixContainer();
+                using (MQClient worker = new MQClient(container))
+                {
+                    worker.Run();
+                }
             }
+            catch(Exception ex)
+            {
+                System.Console.WriteLine("Worker could not load input matrixes");
+            }
+
+
         }
     }
 }

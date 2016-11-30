@@ -6,6 +6,8 @@
 /Consumer/obj
 /Producer/bin
 /Producer/obj
+/Receiver/bin
+/Receiver/obj
 /Consumer.Tests/bin
 /Consumer.Tests/obj
 /DataGenerator/bin

@@ -1,11 +1,12 @@
-﻿using NUnit.Framework;
+﻿using Common.Tools;
+using NUnit.Framework;
 
-namespace Consumer.Tests
+namespace Common.Tests.Tools
 {
     [TestFixture]
     public class CalculatorTests
     {
-        private Calculator calc;
+        private MatrixCalculator calc;
         private int[] m1;
         private int[][] m2;
         private int[] m3;
@@ -13,7 +14,7 @@ namespace Consumer.Tests
         [OneTimeSetUp]
         public void SetUp()
         {
-            calc = new Calculator();
+            calc = new MatrixCalculator();
             m1 = new int[] { 81, 20, 17, 39 };
 
             m2 = new int[4][];

@@ -9,7 +9,7 @@ namespace DataGenerator
         static void Main(string[] args)
         {
             List<int[][]> matrix = MatrixGenerator.GenerateMatrixForCalcuation(int.Parse(args[0]));
-            Serializer.SaveMatrix(matrix);
+            MatrixSerializer.SaveInputMatrix(matrix);
         }
     }
 }

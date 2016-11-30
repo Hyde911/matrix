@@ -1,10 +1,10 @@
-﻿using Common;
+﻿using Common.Results;
 using System.Diagnostics;
 using System.Linq;
 
-namespace Consumer
+namespace Common.Tools
 {
-    public class Calculator
+    public class MatrixCalculator
     {
         private Stopwatch watch = new Stopwatch();
         /// <summary>
@@ -29,14 +29,14 @@ namespace Consumer
         return result;
         }
 
-        public CalculationResult DoCalculation(int[]m1, int[][]m2, string id)
+        public CalculationResult DoCalculation(int[]m1, int[][]m2, string id, int row)
         {
             int[] result;
             watch.Reset();
             watch.Start();
             result = CalculateRow(m1, m2);
             watch.Stop();
-            return new CalculationResult(result, watch.ElapsedMilliseconds, id);
+            return new CalculationResult(result, row, watch.ElapsedMilliseconds, id);
         }
     }
 }

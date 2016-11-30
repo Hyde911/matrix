@@ -15,9 +15,9 @@ namespace DataGenerator.Tests.Tests
             string path = @"D:\test.txt";
             List<int[][]> matrix = MatrixGenerator.GenerateMatrixForCalcuation(10);
 
-            Serializer.SaveMatrix(matrix, path);
+            MatrixSerializer.SaveMatrix(matrix, path);
 
-            List<int[][]> result = Desarializer.LoadMatrix(path);
+            List<int[][]> result = MatrixSerializer.LoadMatrix(path);
             CollectionAssert.AreEqual(matrix, result);
 
             File.Delete(path);

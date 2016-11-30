@@ -1,19 +1,25 @@
 ﻿using Common.Consts;
+using Common.Results;
+using Common.UOW;
+using Consumer.Matrix;
+using DataGenerator.Container;
 using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
 using System;
-using System.Text;
 
-namespace Consumer
+namespace Consumer.MQ
 {
-    public class Worker : IDisposable
+    public class MQClient : IDisposable
     {
         private IConnection connection;
         private IModel channel;
         private EventingBasicConsumer consumer;
+        private Worker worker;
 
-        public Worker()
+        public MQClient(MatrixContainer container)
         {
+            worker = new Worker(container);
+
             var factory = new ConnectionFactory() { HostName = "localhost" };
             connection = factory.CreateConnection();
             channel = connection.CreateModel();
@@ -27,19 +33,19 @@ namespace Consumer
             
         }
 
-        public void Receive()
+        public void Run()
         {
              consumer.Received +=  (model, ea) =>
              {
                  var body = ea.Body;
-                 var message = Encoding.UTF8.GetString(body);
-                 Console.WriteLine("received " + message);
+                 CalculationResult result = worker.Calculate(UnitOfWork.GetFromBytes(ea.Body));
                  var props = ea.BasicProperties;
                  var id = props.CorrelationId;
 
-                 var messageBytes = Encoding.UTF8.GetBytes(message + " " + id);
+                 //var messageBytes = Encoding.UTF8.GetBytes(message + " " + id);
                  channel.BasicAck(deliveryTag: ea.DeliveryTag, multiple: false);
-                 channel.BasicPublish(exchange: "", routingKey: Queues.ReponseQueue, basicProperties: props, body: messageBytes);
+
+                 channel.BasicPublish(exchange: "", routingKey: Queues.ReponseQueue, basicProperties: props, body: CalculationResult.ToBytes(result));
 
              };
             Console.ReadLine();

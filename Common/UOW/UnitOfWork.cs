@@ -33,7 +33,6 @@ namespace Common.UOW
                 throw new Exception("cannot parse bytes");
             }
             return new UnitOfWork(int.Parse(values[0]), int.Parse(values[1]), int.Parse(values[2]));
-
         }
 
         public static byte[] ToBytes(UnitOfWork uow)
@@ -66,6 +65,11 @@ namespace Common.UOW
                 return true;
             }
             return false;
+        }
+
+        public override string ToString()
+        {
+            return string.Format("FirstMatrix {0}; Row {1}; SecondMatrix {2}", FirstMatrix, Row, SecondMatrix);
         }
     }
 }

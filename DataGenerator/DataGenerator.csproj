@@ -48,8 +48,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Container\MatrixContainer.cs" />
     <Compile Include="Generator\MatrixGenerator.cs" />
-    <Compile Include="IO\Desarializer.cs" />
     <Compile Include="IO\Serializer.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

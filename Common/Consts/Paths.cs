@@ -2,6 +2,9 @@
 {
     public class Paths
     {
-        public static string MatrixFilePath = @"D:\matrix.txt";
+        public static string InputMatrix = @"D:\inputMatrix.txt";
+        public static string IntermediateMatrix = @"D:\intermediateMatrix.txt";
+        public static string OutputMatrix = @"D:\outputMatrix.txt";
+
     }
 }

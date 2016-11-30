@@ -52,9 +52,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Client.cs" />
+    <Compile Include="MQ\MQClient.cs" />
+    <Compile Include="Dispatch\Dispatcher.cs" />
+    <Compile Include="Matrix\MatrixAssembler.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Tools\UOWGenerator.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
@@ -65,7 +68,12 @@
       <Project>{a3637f2b-9496-4b82-a594-3466bd2dc0d2}</Project>
       <Name>Common</Name>
     </ProjectReference>
+    <ProjectReference Include="..\DataGenerator\DataGenerator.csproj">
+      <Project>{45aa50f4-8311-4262-b835-f6436e61eb63}</Project>
+      <Name>DataGenerator</Name>
+    </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
