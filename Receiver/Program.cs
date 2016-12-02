@@ -1,4 +1,5 @@
 ﻿using DataGenerator.Container;
+using MatrixAccess;
 using Receiver.MQ;
 using System;
 using System.Collections.Generic;
@@ -12,20 +13,13 @@ namespace Receiver
     {
         static void Main(string[] args)
         {
+
             MatrixContainer container;
-            try
-            {
                 container = new MatrixContainer();
                 using (MQClient client = new MQClient(container))
                 {
                     client.Run();
                 }
-            }
-            catch (Exception ex)
-            {
-                System.Console.WriteLine("Receiver cannot open input file");
-                return;
-            }
         }
     }
 }

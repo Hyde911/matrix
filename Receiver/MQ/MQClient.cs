@@ -24,10 +24,10 @@ namespace Receiver.MQ
         {
             assembler = new MatrixAssembler(container);
 
-            var factory = new ConnectionFactory() { HostName = "localhost" };
+            var factory = new ConnectionFactory() { HostName = "192.168.1.10", Port =  5672, UserName = "test", Password = "test", VirtualHost = "/" };
             connection = factory.CreateConnection();
             channel = connection.CreateModel();
-            channel.QueueDeclare(queue: Queues.ReponseQueue);
+            channel.QueueDeclare(queue: Queues.ReponseQueue, exclusive: false);
             consumer = new EventingBasicConsumer(channel);
             channel.BasicConsume(queue: Queues.ReponseQueue, noAck: false, consumer: consumer);
 

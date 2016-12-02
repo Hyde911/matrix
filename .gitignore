@@ -8,6 +8,12 @@
 /Producer/obj
 /Receiver/bin
 /Receiver/obj
+/DataBase/bin
+/DataBase/obj
+/MatrixAccess/obj
+/MatrixAccess/bin
+/MatrixAccess.Tests/obj
+/MatrixAccess.Tests/bin
 /Consumer.Tests/bin
 /Consumer.Tests/obj
 /DataGenerator/bin

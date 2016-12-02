@@ -1,0 +1,6 @@
+﻿namespace DataGenerator
+{
+    class Program
+    {
+    }
+}
