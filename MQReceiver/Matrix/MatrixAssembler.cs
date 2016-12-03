@@ -8,8 +8,8 @@ namespace MQReceiver.Matrix
     public class MatrixAssembler
     {
         private MatrixAccessor container;
-        private Dictionary <int, double[]> results = new Dictionary<int, double[]>();
-        List<double[][]> result = new List<double[][]>();
+        private Dictionary <int, float[]> results = new Dictionary<int, float[]>();
+        List<float[][]> result = new List<float[][]>();
         private bool isOutput = false;
 
         public MatrixAssembler(MatrixAccessor container)
@@ -43,7 +43,7 @@ namespace MQReceiver.Matrix
 
         private void Assembly()
         {
-            double[][]res = new double[container.Size][];
+            float[][]res = new float[container.Size][];
 
             for (int i = 0; i < container.Size; i++)
             {
@@ -52,7 +52,7 @@ namespace MQReceiver.Matrix
             result.Add(res);
         }
 
-        public List<double[][]> GetOuput()
+        public List<float[][]> GetOuput()
         {
             return result;
         }

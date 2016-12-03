@@ -26,7 +26,7 @@ namespace MatrixAccess.RavenDBTools
             Console.WriteLine("Connection established.");
         }
 
-        public List<double[][]> LoadInputMatrix()
+        public List<float[][]> LoadInputMatrix()
         {
             Console.WriteLine("Loading input matrixes...");
             MatrixType matrix;
@@ -42,7 +42,7 @@ namespace MatrixAccess.RavenDBTools
             return matrix.Data;
         }
 
-        public List<double[][]> LoadIntermediateMatrix()
+        public List<float[][]> LoadIntermediateMatrix()
         {
             Console.WriteLine("Loading intermediate matrix...");
             MatrixType matrix;
@@ -58,7 +58,7 @@ namespace MatrixAccess.RavenDBTools
             return matrix.Data;
         }
 
-        public List<double[][]> LoadOutputMatrix()
+        public List<float[][]> LoadOutputMatrix()
         {
             Console.WriteLine("Loading output matrixes...");
             MatrixType matrix;
@@ -74,7 +74,7 @@ namespace MatrixAccess.RavenDBTools
             return matrix.Data;
         }
 
-        public void SaveInputMatrix(List<double[][]> matrix)
+        public void SaveInputMatrix(List<float[][]> matrix)
         {
             if (matrix.Count != 3)
             {
@@ -93,7 +93,7 @@ namespace MatrixAccess.RavenDBTools
             Console.WriteLine("Input matrixes saved.");
         }
 
-        public void SaveIntermediateMatrix(List<double[][]> matrix)
+        public void SaveIntermediateMatrix(List<float[][]> matrix)
         {
             if (matrix.Count != 1)
             {
@@ -112,7 +112,7 @@ namespace MatrixAccess.RavenDBTools
             Console.WriteLine("Intermediate matrixes saved.");
         }
 
-        public void SaveOutputMatrix(List<double[][]> matrix)
+        public void SaveOutputMatrix(List<float[][]> matrix)
         {
             if (matrix.Count != 1)
             {

@@ -3,6 +3,7 @@ using Common.MatrixIndetifiers;
 using MatrixAccess.RavenDBTools;
 using NUnit.Framework;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace MatrixAccess.Tests.IO
 {
@@ -28,34 +29,61 @@ namespace MatrixAccess.Tests.IO
         [Test]
         public void DBInputSerializerTest()
         {
-            List<double[][]> matrix = MatrixGen.GenerateMatrixForCalcuation(matrixSize);
+            List<float[][]> matrix = MatrixGen.GenerateMatrixForCalcuation(matrixSize);
 
             serializer.SaveInputMatrix(matrix);
 
-            List<double[][]> result = serializer.LoadInputMatrix();
-            CollectionAssert.AreEqual(matrix, result);
+            List<float[][]> result = serializer.LoadInputMatrix();
+            for (int i = 0; i < matrix.Count(); i++)
+            {
+                for (int j = 0; j < matrix[i].Count(); j++)
+                {
+                    for (int k = 0; k < matrix[i][j].Count(); k++)
+                    {
+                        Assert.AreEqual(matrix[i][j][k], result[i][j][k], 0.0000000001);
+                    }
+                }
+            }
         }
 
         [Test]
         public void DBIntermediateSerializerTest()
         {
-            List<double[][]> matrix = MatrixGen.GenerateMatrixForCalcuation(matrixSize);
+            List<float[][]> matrix = MatrixGen.GenerateMatrixForCalcuation(matrixSize);
             matrix = matrix.GetRange(0, 1);
             serializer.SaveIntermediateMatrix(matrix);
 
-            List<double[][]> result = serializer.LoadIntermediateMatrix();
-            CollectionAssert.AreEqual(matrix, result);
+            List<float[][]> result = serializer.LoadIntermediateMatrix();
+            for (int i = 0; i < matrix.Count(); i++)
+            {
+                for (int j = 0; j < matrix[i].Count(); j++)
+                {
+                    for (int k = 0; k < matrix[i][j].Count(); k++)
+                    {
+                        Assert.AreEqual(matrix[i][j][k], result[i][j][k], 0.0000000001);
+                    }
+                }
+            }
         }
 
         [Test]
         public void DBOutputSerializerTest()
         {
-            List<double[][]> matrix = MatrixGen.GenerateMatrixForCalcuation(matrixSize);
+            List<float[][]> matrix = MatrixGen.GenerateMatrixForCalcuation(matrixSize);
             matrix = matrix.GetRange(0, 1);
             serializer.SaveOutputMatrix(matrix);
 
-            List<double[][]> result = serializer.LoadOutputMatrix();
-            CollectionAssert.AreEqual(matrix, result);
+            List<float[][]> result = serializer.LoadOutputMatrix();
+            for (int i = 0; i < matrix.Count(); i++)
+            {
+                for (int j = 0; j < matrix[i].Count(); j++)
+                {
+                    for (int k = 0; k < matrix[i][j].Count(); k++)
+                    {
+                        Assert.AreEqual(matrix[i][j][k], result[i][j][k], 0.0000000001);
+                    }
+                }
+            }
         }
     }
 }

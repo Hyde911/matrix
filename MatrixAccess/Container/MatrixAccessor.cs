@@ -10,15 +10,15 @@ namespace DataGenerator.Container
     public class MatrixAccessor
     {
         private IMatrixSerializer serializer;
-        private List<double[][]> intermediateMatrix;
-        private List<double[][]> outputMatrix;
+        private List<float[][]> intermediateMatrix;
+        private List<float[][]> outputMatrix;
 
-        public List<double[][]> InputMatrix
+        public List<float[][]> InputMatrix
         {
             private set; get;
         }
 
-        public List<double[][]> IntermediateMatrix
+        public List<float[][]> IntermediateMatrix
         {
             get
             {
@@ -30,7 +30,7 @@ namespace DataGenerator.Container
             }
         }
 
-        public List<double[][]> OutputMatrix
+        public List<float[][]> OutputMatrix
         {
             get
             {
@@ -57,7 +57,7 @@ namespace DataGenerator.Container
             Size = InputMatrix[0].Count();
         }
 
-        public void SaveIntermediateMatrix(List<double[][]> matrix)
+        public void SaveIntermediateMatrix(List<float[][]> matrix)
         {
             if (matrix[0].Count() != Size || matrix[0][0].Count() != Size)
             {
@@ -82,7 +82,7 @@ namespace DataGenerator.Container
             }
         }
 
-        public void SaveOutputMatrix(List<double[][]> matrix)
+        public void SaveOutputMatrix(List<float[][]> matrix)
         {
             if (matrix[0].Count() != Size || matrix[0][0].Count() != Size)
             {

@@ -53,7 +53,10 @@ namespace MQReceiver.MQ
                 CalculationResult result = CalculationResult.GetFromBytes(ea.Body);
                 var props = ea.BasicProperties;
                 var id = props.CorrelationId;
-                Console.WriteLine("Received result, adding to assembly");
+                if (result.Row % 32 == 0)
+                {
+                    Console.WriteLine(string.Format("Received result, adding to assembly. Row: {0}", result.Row));
+                }
                 logger.LogWorkerTime(result);
                 if (!notifyProducer && assembler.AddResult(result))
                 {

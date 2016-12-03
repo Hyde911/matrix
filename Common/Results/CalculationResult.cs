@@ -7,7 +7,7 @@ namespace Common.Results
 {
     public class CalculationResult
     {
-        public double[] Result
+        public float[] Result
         {
             private set;
             get;
@@ -31,7 +31,7 @@ namespace Common.Results
             get;
         }
 
-        public CalculationResult(double[] result, int row, long time, string workerId)
+        public CalculationResult(float[] result, int row, long time, string workerId)
         {
             Result = result;
             Time = time;

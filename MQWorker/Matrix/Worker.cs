@@ -22,7 +22,10 @@ namespace MQWorker.Matrix
 
         public CalculationResult Calculate(UnitOfWork uow)
         {
-            Console.WriteLine(string.Format("Received UOW: {0}, starting calculation...", uow.ToString()));
+            if (uow.Row % 32 == 0)
+            {
+                Console.WriteLine(string.Format("Received UOW: {0}, starting calculation...", uow.ToString()));
+            }
             if (!(uow.FirstMatrix == 1))
             {
                 return MatrixCalculator.DoCalculation(GetVector(uow, true), GetSecondMatrix(uow), id, uow.Row);
@@ -33,7 +36,7 @@ namespace MQWorker.Matrix
             }
         }
 
-        private double[] GetVector(UnitOfWork uow, bool intermediate)
+        private float[] GetVector(UnitOfWork uow, bool intermediate)
         {
             if (intermediate)
             {
@@ -45,7 +48,7 @@ namespace MQWorker.Matrix
             }
         }
 
-        private double[][] GetSecondMatrix(UnitOfWork uow)
+        private float[][] GetSecondMatrix(UnitOfWork uow)
         {
             return inputContainer.InputMatrix[uow.SecondMatrix];
         }

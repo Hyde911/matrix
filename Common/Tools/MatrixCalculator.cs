@@ -13,11 +13,11 @@ namespace Common.Tools
         /// <param name="m1"></param>
         /// <param name="m2"></param>
         /// <returns></returns>
-        public static double[] CalculateRow(double[] m1, double[][] m2)
+        public static float[] CalculateRow(float[] m1, float[][] m2)
         {
             int rows = m1.Count();
             int columns = m2[0].Count();
-            double[] result = new double[columns];
+            float[] result = new float[columns];
 
                 for (int j = 0; j < columns; j++)
                 {
@@ -29,9 +29,9 @@ namespace Common.Tools
         return result;
         }
 
-        public static CalculationResult DoCalculation(double[]m1, double[][]m2, string id, int row)
+        public static CalculationResult DoCalculation(float[]m1, float[][]m2, string id, int row)
         {
-            double[] result;
+            float[] result;
             watch.Reset();
             watch.Start();
             result = CalculateRow(m1, m2);
