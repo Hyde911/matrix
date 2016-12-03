@@ -5,11 +5,11 @@ namespace MQProducer.Tools
 {
     public class UOWGenerator
     {
-        private InputMatrixContainer container;
+        private MatrixAccessor container;
         private int firstCalcRow;
         private int secodnCalcRow;
 
-        public UOWGenerator (InputMatrixContainer container)
+        public UOWGenerator (MatrixAccessor container)
         {
             this.container = container;
         }

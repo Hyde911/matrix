@@ -33,7 +33,7 @@ namespace Common.Generator
             List<int[][]> result = new List<int[][]>(3);
             for (int i = 0; i < 3; i++)
             {
-                result.Add(GenerateMatix(n, 1000));
+                result.Add(GenerateMatix(n, 10));
             }
             return result;
         }

@@ -8,10 +8,10 @@ namespace MQConsumer
     {
         static void Main(string[] args)
         {
-            InputMatrixContainer inputContainer;
+            MatrixAccessor inputContainer;
             try
             {
-                inputContainer = new InputMatrixContainer();
+                inputContainer = new MatrixAccessor();
                 using (MQClient worker = new MQClient(inputContainer))
                 {
                     worker.Run();

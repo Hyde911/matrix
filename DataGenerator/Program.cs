@@ -14,10 +14,11 @@ namespace DataGenerator
             IMatrixSerializer serializer;
             if (args.Count() < 1)
             {
-                throw new Exception("Matrix size has not been provide");
+                throw new Exception("Matrix size has not been provided");
             }
             using (serializer = new RavenDBMatrixSerializer(new Identifiers()))
             {
+                serializer.DeleteAllData();
                 serializer.SaveInputMatrix(MatrixGen.GenerateMatrixForCalcuation(int.Parse(args[0])));
             }
         }

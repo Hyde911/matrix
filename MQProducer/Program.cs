@@ -8,10 +8,10 @@
     {
         static void Main(string[] args)
         {
-            InputMatrixContainer inputContainer;
+            MatrixAccessor inputContainer;
             try
             {
-                inputContainer = new InputMatrixContainer();
+                inputContainer = new MatrixAccessor();
             }catch (Exception ex)
             {
                 System.Console.WriteLine("Producer cannot open input file");

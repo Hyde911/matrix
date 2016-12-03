@@ -7,11 +7,11 @@ namespace MQProducer.Dispatch
 {
     public class Dispatcher
     {
-        private InputMatrixContainer container;
+        private MatrixAccessor container;
         private UOWGenerator uowGen;
         private MQClient MQClient;
 
-        public Dispatcher(InputMatrixContainer container)
+        public Dispatcher(MatrixAccessor container)
         {
             this.container = container;
             uowGen = new UOWGenerator(container);
@@ -29,5 +29,6 @@ namespace MQProducer.Dispatch
                 }
             }
         }
+
     }
 }

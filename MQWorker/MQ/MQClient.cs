@@ -16,7 +16,7 @@ namespace MQWorker.MQ
         private EventingBasicConsumer consumer;
         private Worker worker;
 
-        public MQClient(InputMatrixContainer inputContainer)
+        public MQClient(MatrixAccessor inputContainer)
         {
             worker = new Worker(inputContainer);
 
@@ -30,14 +30,14 @@ namespace MQWorker.MQ
             };
             connection = factory.CreateConnection();
             channel = connection.CreateModel();
-            channel.QueueDeclare(queue: Queues.MessageQueue, durable: false,
+            channel.QueueDeclare(queue: Queues.MessageQueue,
+                                             durable: false,
                                              exclusive: false,
                                              autoDelete: true,
                                              arguments: null);
             channel.BasicQos(0, 1, false);
             consumer = new EventingBasicConsumer(channel);
             channel.BasicConsume(queue: Queues.MessageQueue, noAck: false, consumer: consumer);
-
         }
 
         public void Run()
@@ -49,13 +49,12 @@ namespace MQWorker.MQ
                var props = ea.BasicProperties;
                var id = props.CorrelationId;
 
-                 //var messageBytes = Encoding.UTF8.GetBytes(message + " " + id);
-                 channel.BasicAck(deliveryTag: ea.DeliveryTag, multiple: false);
+               channel.BasicAck(deliveryTag: ea.DeliveryTag, multiple: false);
 
                channel.BasicPublish(exchange: "", routingKey: Queues.ReponseQueue, basicProperties: props, body: CalculationResult.ToBytes(result));
 
            };
-            Console.ReadLine();
+           Console.ReadLine();
         }
 
         public void Dispose()

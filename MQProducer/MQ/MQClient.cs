@@ -26,8 +26,13 @@ namespace MQProducer.MQ
             connection = factory.CreateConnection();
             channel = connection.CreateModel();
             channel.QueueDeclare(queue: Queues.MessageQueue, autoDelete:true, exclusive:false);
+            channel.QueueDeclare(queue: Queues.NotificationQueue,
+                                 durable: false,
+                                 exclusive: false,
+                                 autoDelete: true,
+                                 arguments: null);
             consumer = new EventingBasicConsumer(channel);
-            //channel.BasicConsume(queue: Queues.ReponseQueue, noAck: false, consumer: consumer);
+            channel.BasicConsume(queue: Queues.NotificationQueue, noAck: false, consumer: consumer);
             
         }
 

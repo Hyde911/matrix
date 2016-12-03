@@ -63,7 +63,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Container\MatrixContainer.cs" />
+    <Compile Include="Container\MatrixAccessor.cs" />
     <Compile Include="RavenDBTools\RavenDBMatrixSerializer.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

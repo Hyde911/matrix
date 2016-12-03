@@ -49,6 +49,7 @@
     <Compile Include="Consts\MQServerConfig.cs" />
     <Compile Include="Consts\RavenDBConfig.cs" />
     <Compile Include="Exceptions\DataBaseAccessException.cs" />
+    <Compile Include="Exceptions\MatrixSizeException.cs" />
     <Compile Include="Exceptions\NumberOfMatrixesException.cs" />
     <Compile Include="Generator\MatrixGen.cs" />
     <Compile Include="Interfaces\IIdentifiers.cs" />

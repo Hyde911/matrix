@@ -8,11 +8,11 @@ namespace MQWorker.Matrix
 {
     public class Worker
     {
-        private InputMatrixContainer inputContainer;
+        private MatrixAccessor inputContainer;
         private MatrixCalculator calculator;
         private string id;
 
-        public Worker(InputMatrixContainer inputContainer)
+        public Worker(MatrixAccessor inputContainer)
         {
             this.inputContainer = inputContainer;
             calculator = new MatrixCalculator();
@@ -28,12 +28,12 @@ namespace MQWorker.Matrix
 
         private int[] GetVector(UnitOfWork uow)
         {
-            return inputContainer.matrixes[uow.FirstMatrix][uow.Row];
+            return inputContainer.InputMatrix[uow.FirstMatrix][uow.Row];
         }
 
         private int[][] GetSecondMatrix(UnitOfWork uow)
         {
-            return inputContainer.matrixes[uow.SecondMatrix];
+            return inputContainer.InputMatrix[uow.SecondMatrix];
         }
     }
 }

@@ -7,11 +7,12 @@ namespace MQReceiver.Matrix
 {
     public class MatrixAssembler
     {
-        private InputMatrixContainer container;
+        private MatrixAccessor container;
         private Dictionary <int, int[]> results = new Dictionary<int, int[]>();
-        List<int[][]> output = new List<int[][]>();
+        List<int[][]> result = new List<int[][]>();
+        private bool isOutput = false;
 
-        public MatrixAssembler(InputMatrixContainer container)
+        public MatrixAssembler(MatrixAccessor container)
         {
             this.container = container;
         }
@@ -22,11 +23,22 @@ namespace MQReceiver.Matrix
             {
                 results.Add(result.Row, result.Result);
                 Assembly();
-                //print();
-                return false;
+                if (!isOutput)
+                {
+                    container.SaveIntermediateMatrix(this.result);
+                    isOutput = true;
+                    results.Clear();
+                    this.result.Clear();
+                }
+                else
+                {
+                    container.SaveOutputMatrix(this.result);
+                    return isOutput;
+                }
+                return isOutput;
             }
             results.Add(result.Row, result.Result);
-            return true;
+            return isOutput;
         }
 
         private void Assembly()
@@ -37,17 +49,17 @@ namespace MQReceiver.Matrix
             {
                 res[i] = results[i];
             }
-            output.Add(res);
+            result.Add(res);
         }
 
         public List<int[][]> GetOuput()
         {
-            return output;
+            return result;
         }
 
         public void print()
         {
-            foreach (int[][] list in output)
+            foreach (int[][] list in result)
             {
                 foreach (int[] arr in list)
                 {

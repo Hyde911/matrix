@@ -2,9 +2,9 @@
 
 namespace Common.Exceptions
 {
-    public class DataBaseAccessException : Exception
+    public class MatrixSizeException : Exception
     {
-        DataBaseAccessException(string msg)
+        public MatrixSizeException(string msg)
             : base(msg)
         { }
     }

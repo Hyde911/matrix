@@ -14,8 +14,9 @@ namespace MQReceiver.MQ
         private IModel channel;
         private EventingBasicConsumer consumer;
         private MatrixAssembler assembler;
+        private bool notifyProducer = false;
 
-        public MQClient(InputMatrixContainer container)
+        public MQClient(MatrixAccessor container)
         {
             assembler = new MatrixAssembler(container);
 
@@ -30,6 +31,11 @@ namespace MQReceiver.MQ
             connection = factory.CreateConnection();
             channel = connection.CreateModel();
             channel.QueueDeclare(queue: Queues.ReponseQueue, exclusive: false);
+            channel.QueueDeclare(queue: Queues.NotificationQueue,
+                                             durable: false,
+                                             exclusive: false,
+                                             autoDelete: true,
+                                             arguments: null);
             consumer = new EventingBasicConsumer(channel);
             channel.BasicConsume(queue: Queues.ReponseQueue, noAck: false, consumer: consumer);
 
@@ -45,8 +51,12 @@ namespace MQReceiver.MQ
                 var props = ea.BasicProperties;
                 var id = props.CorrelationId;
                 Console.WriteLine("Received result, adding to assembly");
-                assembler.AddResult(result);
-                //var messageBytes = Encoding.UTF8.GetBytes(message + " " + id);
+
+                if (!notifyProducer && assembler.AddResult(result))
+                {
+                    channel.BasicPublish(exchange: "", routingKey: Queues.NotificationQueue, body: new byte[] { 1 });
+                }
+
                 channel.BasicAck(deliveryTag: ea.DeliveryTag, multiple: false);
             };
             Console.ReadLine();

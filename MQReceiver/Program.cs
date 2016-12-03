@@ -11,8 +11,8 @@ namespace Receiver
 
             //var serilaize = factory.Container
 
-            InputMatrixContainer inputContainer;
-                inputContainer = new InputMatrixContainer();
+            MatrixAccessor inputContainer;
+                inputContainer = new MatrixAccessor();
                 using (MQClient client = new MQClient(inputContainer))
                 {
                     client.Run();
