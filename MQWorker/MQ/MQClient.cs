@@ -2,12 +2,12 @@
 using Common.Results;
 using Common.UOW;
 using DataGenerator.Container;
-using MQConsumer.Matrix;
+using MQWorker.Matrix;
 using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
 using System;
 
-namespace MQConsumer.MQ
+namespace MQWorker.MQ
 {
     public class MQClient : IDisposable
     {

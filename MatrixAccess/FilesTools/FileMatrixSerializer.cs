@@ -10,7 +10,9 @@ namespace MatrixAccess.FilesTools
 {
     public class FileMatrixSerializer : IMatrixSerializer
     {
-        public void SaveInputMatrix(List<int[][]>matrix)
+        private StreamWriter streamWriter;
+        privast StreamReader streamReader;
+        public void SaveInputMatrix(List<int[][]> matrix)
         {
             if (matrix.Count != 3)
             {
@@ -33,14 +35,11 @@ namespace MatrixAccess.FilesTools
         /// </summary>
         /// <param name="matrix"></param>
         /// <param name="path"></param>
-        public void SaveMatrix(List<int[][]>matrix, string path)
+        public void SaveMatrix(List<int[][]> matrix, string path)
         {
             JsonSerializer serializer = new JsonSerializer();
 
-            using (StreamWriter sw = new StreamWriter(path))
-            {
-                serializer.Serialize(sw, matrix);
-            }
+            serializer.Serialize(streamWriter, matrix);
         }
 
         public List<int[][]> LoadInputMatrix()
@@ -69,10 +68,7 @@ namespace MatrixAccess.FilesTools
 
             List<int[][]> result;
 
-            using (StreamReader sw = new StreamReader(path))
-            {
-                result = (List<int[][]>)serializer.Deserialize(sw, typeof(List<int[][]>));
-            }
+            result = (List<int[][]>)serializer.Deserialize(streamWriter, typeof(List<int[][]>));
 
             return result;
         }
@@ -93,6 +89,11 @@ namespace MatrixAccess.FilesTools
         }
 
         public void DeleteAllData()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Dispose()
         {
             throw new NotImplementedException();
         }

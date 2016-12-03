@@ -2,8 +2,8 @@
 /Common/obj
 /Common.Tests/bin
 /Common.Tests/obj
-/MQConsumer/bin
-/MQConsumer/obj
+/MQWorker/bin
+/MQWorker/obj
 /MQProducer/bin
 /MQProducer/obj
 /MQReceiver/bin
@@ -14,10 +14,11 @@
 /MatrixAccess/bin
 /MatrixAccess.Tests/obj
 /MatrixAccess.Tests/bin
-/MQConsumer.Tests/bin
-/MQConsumer.Tests/obj
+/MQWorker.Tests/bin
+/MQWorker.Tests/obj
 /DataGenerator/bin
 /DataGenerator/obj
 /DataGenerator.Tests/bin
 /DataGenerator.Tests/obj
+/bin
 /.vs/

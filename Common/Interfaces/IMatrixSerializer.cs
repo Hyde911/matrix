@@ -1,8 +1,9 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace Common.Interfaces
 {
-    public interface IMatrixSerializer
+    public interface IMatrixSerializer : IDisposable
     {
         void SaveInputMatrix(List<int[][]> matrix);
 

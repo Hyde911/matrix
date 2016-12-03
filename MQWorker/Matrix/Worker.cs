@@ -5,7 +5,7 @@ using DataGenerator.Container;
 using System;
 using System.Threading;
 
-namespace MQConsumer.Matrix
+namespace MQWorker.Matrix
 {
     public class Worker
     {

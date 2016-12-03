@@ -8,7 +8,7 @@ namespace DataGenerator.Container
 {
     public class MatrixContainer
     {
-        private IMatrixSerializer serializer = new RavenDBMatrixSerializer(new Identifiers());
+        private IMatrixSerializer serializer;
         public List<int[][]> matrixes;
         
         public int Size
@@ -19,7 +19,10 @@ namespace DataGenerator.Container
 
         public MatrixContainer()
         {
-            matrixes = serializer.LoadInputMatrix();
+            using (serializer = new RavenDBMatrixSerializer(new Identifiers()))
+            {
+                matrixes = serializer.LoadInputMatrix();
+            }
             Size = matrixes[0].Count();
         }
     }

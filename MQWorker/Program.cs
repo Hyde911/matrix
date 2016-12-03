@@ -1,5 +1,5 @@
 ﻿using DataGenerator.Container;
-using MQConsumer.MQ;
+using MQWorker.MQ;
 using System;
 
 namespace MQConsumer
