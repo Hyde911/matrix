@@ -1,8 +1,7 @@
-﻿using DataGenerator.IO;
-using MatrixGenerator.Generator;
+﻿using Common.Generator;
+using MatrixAccess.FilesTools;
 using NUnit.Framework;
 using System.Collections.Generic;
-using System.IO;
 
 namespace MatrixAccess.Tests.Tests
 {
@@ -21,14 +20,14 @@ namespace MatrixAccess.Tests.Tests
         public void InputFileSerializerTest()
         {
             string path = @"D:\test.txt";
-            List<int[][]> matrix = MatrixGen.GenerateMatrixForCalcuation(10);
+            List<int[][]> matrix = MatrixGen.GenerateMatrixForCalcuation(1024);
 
             serializer.SaveMatrix(matrix, path);
 
             List<int[][]> result = serializer.LoadMatrix(path);
             CollectionAssert.AreEqual(matrix, result);
 
-            File.Delete(path);
+            //File.Delete(path);
         }
     }
 }

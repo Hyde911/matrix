@@ -15,5 +15,10 @@ namespace Common.Interfaces
         List<int[][]> LoadIntermediateMatrix();
 
         List<int[][]> LoadOutputMatrix();
+
+        void DeleteInputMatrix();
+        void DeleteIntermediateMatrix();
+        void DeleteOutputMatrix();
+        void DeleteAllData();
     }
 }
