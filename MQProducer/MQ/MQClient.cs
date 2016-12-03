@@ -25,7 +25,7 @@ namespace MQProducer.MQ
             };
             connection = factory.CreateConnection();
             channel = connection.CreateModel();
-            //channel.QueueDeclare(queue: Queues.ReponseQueue);
+            channel.QueueDeclare(queue: Queues.MessageQueue, autoDelete:true, exclusive:false);
             consumer = new EventingBasicConsumer(channel);
             //channel.BasicConsume(queue: Queues.ReponseQueue, noAck: false, consumer: consumer);
             

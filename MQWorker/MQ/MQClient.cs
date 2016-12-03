@@ -32,7 +32,7 @@ namespace MQWorker.MQ
             channel = connection.CreateModel();
             channel.QueueDeclare(queue: Queues.MessageQueue, durable: false,
                                              exclusive: false,
-                                             autoDelete: false,
+                                             autoDelete: true,
                                              arguments: null);
             channel.BasicQos(0, 1, false);
             consumer = new EventingBasicConsumer(channel);
