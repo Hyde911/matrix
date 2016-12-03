@@ -16,11 +16,18 @@ namespace MQWorker.MQ
         private EventingBasicConsumer consumer;
         private Worker worker;
 
-        public MQClient(MatrixContainer container)
+        public MQClient(InputMatrixContainer inputContainer)
         {
-            worker = new Worker(container);
+            worker = new Worker(inputContainer);
 
-            var factory = new ConnectionFactory() { HostName = "192.168.1.10", Port = 5672, UserName = "test", Password = "test", VirtualHost = "/" };
+            var factory = new ConnectionFactory()
+            {
+                HostName = MQServerConfig.IP,
+                Port = MQServerConfig.PORT,
+                UserName = MQServerConfig.USER,
+                Password = MQServerConfig.USER,
+                VirtualHost = MQServerConfig.VHOST
+            };
             connection = factory.CreateConnection();
             channel = connection.CreateModel();
             channel.QueueDeclare(queue: Queues.MessageQueue, durable: false,
@@ -30,24 +37,24 @@ namespace MQWorker.MQ
             channel.BasicQos(0, 1, false);
             consumer = new EventingBasicConsumer(channel);
             channel.BasicConsume(queue: Queues.MessageQueue, noAck: false, consumer: consumer);
-            
+
         }
 
         public void Run()
         {
-             consumer.Received +=  (model, ea) =>
-             {
-                 var body = ea.Body;
-                 CalculationResult result = worker.Calculate(UnitOfWork.GetFromBytes(ea.Body));
-                 var props = ea.BasicProperties;
-                 var id = props.CorrelationId;
+            consumer.Received += (model, ea) =>
+           {
+               var body = ea.Body;
+               CalculationResult result = worker.Calculate(UnitOfWork.GetFromBytes(ea.Body));
+               var props = ea.BasicProperties;
+               var id = props.CorrelationId;
 
                  //var messageBytes = Encoding.UTF8.GetBytes(message + " " + id);
                  channel.BasicAck(deliveryTag: ea.DeliveryTag, multiple: false);
 
-                 channel.BasicPublish(exchange: "", routingKey: Queues.ReponseQueue, basicProperties: props, body: CalculationResult.ToBytes(result));
+               channel.BasicPublish(exchange: "", routingKey: Queues.ReponseQueue, basicProperties: props, body: CalculationResult.ToBytes(result));
 
-             };
+           };
             Console.ReadLine();
         }
 

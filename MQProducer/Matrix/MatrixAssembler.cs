@@ -6,11 +6,11 @@ namespace MQProducer.Matrix
 {
     public class MatrixAssembler
     {
-        private MatrixContainer container;
+        private InputMatrixContainer container;
         private List<int[]> results = new List<int[]>();
         List<int[][]> output = new List<int[][]>();
 
-        public MatrixAssembler(MatrixContainer container)
+        public MatrixAssembler(InputMatrixContainer container)
         {
             this.container = container;
         }

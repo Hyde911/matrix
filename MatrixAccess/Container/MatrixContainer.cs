@@ -6,7 +6,7 @@ using System.Linq;
 
 namespace DataGenerator.Container
 {
-    public class MatrixContainer
+    public class InputMatrixContainer
     {
         private IMatrixSerializer serializer;
         public List<int[][]> matrixes;
@@ -17,7 +17,7 @@ namespace DataGenerator.Container
             get;
         }
 
-        public MatrixContainer()
+        public InputMatrixContainer()
         {
             using (serializer = new RavenDBMatrixSerializer(new Identifiers()))
             {

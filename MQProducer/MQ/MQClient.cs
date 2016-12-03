@@ -15,7 +15,14 @@ namespace MQProducer.MQ
 
         public MQClient()
         {
-            var factory = new ConnectionFactory() { HostName = "192.168.1.10", Port = 5672, UserName = "test", Password = "test", VirtualHost = "/" };
+            var factory = new ConnectionFactory()
+            {
+                HostName = MQServerConfig.IP,
+                Port = MQServerConfig.PORT,
+                UserName = MQServerConfig.USER,
+                Password = MQServerConfig.USER,
+                VirtualHost = MQServerConfig.VHOST
+            };
             connection = factory.CreateConnection();
             channel = connection.CreateModel();
             //channel.QueueDeclare(queue: Queues.ReponseQueue);

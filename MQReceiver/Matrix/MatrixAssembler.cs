@@ -7,11 +7,11 @@ namespace MQReceiver.Matrix
 {
     public class MatrixAssembler
     {
-        private MatrixContainer container;
+        private InputMatrixContainer container;
         private Dictionary <int, int[]> results = new Dictionary<int, int[]>();
         List<int[][]> output = new List<int[][]>();
 
-        public MatrixAssembler(MatrixContainer container)
+        public MatrixAssembler(InputMatrixContainer container)
         {
             this.container = container;
         }

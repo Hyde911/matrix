@@ -1,4 +1,5 @@
-﻿using Common.Exceptions;
+﻿using Common.Consts;
+using Common.Exceptions;
 using Common.Interfaces;
 using Raven.Client;
 using Raven.Client.Document;
@@ -16,7 +17,11 @@ namespace MatrixAccess.RavenDBTools
         {
             this.ids = ids;
             Console.WriteLine("Connecting to the DB...");
-            store = new DocumentStore { Url = "http://localhost:8080/", DefaultDatabase = "matrix" };
+            store = new DocumentStore
+            {
+                Url = RavenDBConfig.URL,
+                DefaultDatabase = RavenDBConfig.DEFAULTDATABASE
+            };
             store.Initialize();
             Console.WriteLine("Connection established.");
         }

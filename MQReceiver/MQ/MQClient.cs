@@ -15,11 +15,18 @@ namespace MQReceiver.MQ
         private EventingBasicConsumer consumer;
         private MatrixAssembler assembler;
 
-        public MQClient(MatrixContainer container)
+        public MQClient(InputMatrixContainer container)
         {
             assembler = new MatrixAssembler(container);
 
-            var factory = new ConnectionFactory() { HostName = "192.168.1.10", Port =  5672, UserName = "test", Password = "test", VirtualHost = "/" };
+            var factory = new ConnectionFactory()
+            {
+                HostName = MQServerConfig.IP,
+                Port = MQServerConfig.PORT,
+                UserName = MQServerConfig.USER,
+                Password = MQServerConfig.USER,
+                VirtualHost = MQServerConfig.VHOST
+            };
             connection = factory.CreateConnection();
             channel = connection.CreateModel();
             channel.QueueDeclare(queue: Queues.ReponseQueue, exclusive: false);

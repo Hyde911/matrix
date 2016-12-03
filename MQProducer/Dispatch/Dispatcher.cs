@@ -7,11 +7,11 @@ namespace MQProducer.Dispatch
 {
     public class Dispatcher
     {
-        private MatrixContainer container;
+        private InputMatrixContainer container;
         private UOWGenerator uowGen;
         private MQClient MQClient;
 
-        public Dispatcher(MatrixContainer container)
+        public Dispatcher(InputMatrixContainer container)
         {
             this.container = container;
             uowGen = new UOWGenerator(container);

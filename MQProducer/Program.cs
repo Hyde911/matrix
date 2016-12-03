@@ -8,16 +8,16 @@
     {
         static void Main(string[] args)
         {
-            MatrixContainer container;
+            InputMatrixContainer inputContainer;
             try
             {
-                container = new MatrixContainer();
+                inputContainer = new InputMatrixContainer();
             }catch (Exception ex)
             {
                 System.Console.WriteLine("Producer cannot open input file");
                 return;
             }
-            Dispatcher dispatcher = new Dispatcher(container);
+            Dispatcher dispatcher = new Dispatcher(inputContainer);
 
             dispatcher.Run();
             //int[] m1 = new int[] { 81, 20, 17, 39 };
