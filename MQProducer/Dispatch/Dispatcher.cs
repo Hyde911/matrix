@@ -27,6 +27,15 @@ namespace MQProducer.Dispatch
                     MQClient.Call(uow);
                     uow = uowGen.GenerateUOWFirstCalc();
                 }
+
+                MQClient.WatiForNotification();
+
+                uow = uowGen.GenerateUOWSecondCalc();
+                while (uow != null)
+                {
+                    MQClient.Call(uow);
+                    uow = uowGen.GenerateUOWSecondCalc();
+                }
             }
         }
 

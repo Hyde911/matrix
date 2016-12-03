@@ -23,12 +23,26 @@ namespace MQWorker.Matrix
         public CalculationResult Calculate(UnitOfWork uow)
         {
             Console.WriteLine(string.Format("Received UOW: {0}, starting calculation...", uow.ToString()));
-            return calculator.DoCalculation(GetVector(uow), GetSecondMatrix(uow), id, uow.Row);
+            if (!(uow.FirstMatrix == 1))
+            {
+                return calculator.DoCalculation(GetVector(uow, true), GetSecondMatrix(uow), id, uow.Row);
+            }
+            else
+            {
+                return calculator.DoCalculation(GetVector(uow, false), GetSecondMatrix(uow), id, uow.Row);
+            }
         }
 
-        private int[] GetVector(UnitOfWork uow)
+        private int[] GetVector(UnitOfWork uow, bool intermediate)
         {
-            return inputContainer.InputMatrix[uow.FirstMatrix][uow.Row];
+            if (intermediate)
+            {
+                return inputContainer.InputMatrix[uow.FirstMatrix][uow.Row];
+            }
+            else
+            {
+                return inputContainer.IntermediateMatrix[0][uow.Row];
+            }
         }
 
         private int[][] GetSecondMatrix(UnitOfWork uow)

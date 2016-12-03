@@ -32,40 +32,41 @@ namespace MQProducer.MQ
                                  autoDelete: true,
                                  arguments: null);
             consumer = new EventingBasicConsumer(channel);
-            channel.BasicConsume(queue: Queues.NotificationQueue, noAck: false, consumer: consumer);
+            channel.BasicConsume(queue: Queues.NotificationQueue, noAck: true, consumer: consumer);
             
         }
 
-        public void Call(string message)
-        {
-            var corelationId = Guid.NewGuid().ToString();
-            var props = channel.CreateBasicProperties();
-            props.ReplyTo = Queues.ReponseQueue;
-            props.CorrelationId = corelationId;
+        //public void Call(string message, Action secondQueue)
+        //{
+        //    var corelationId = Guid.NewGuid().ToString();
+        //    var props = channel.CreateBasicProperties();
+        //    props.ReplyTo = Queues.ReponseQueue;
+        //    props.CorrelationId = corelationId;
 
-            var messageBytes = Encoding.UTF8.GetBytes(message);
-            Console.WriteLine(string.Format("sending {0}", message));
-            channel.BasicPublish(exchange: "", routingKey: Queues.MessageQueue, basicProperties: props, body: messageBytes);
+        //    var messageBytes = Encoding.UTF8.GetBytes(message);
+        //    Console.WriteLine(string.Format("sending {0}", message));
+        //    channel.BasicPublish(exchange: "", routingKey: Queues.MessageQueue, basicProperties: props, body: messageBytes);
 
-            //consumer.Received += (model, ea) =>
-            //                {
-            //                    var body = ea.Body;
-            //                    var reply = Encoding.UTF8.GetString(body);
-            //                    Console.WriteLine("reply " + reply);
-            //                };
-            //Console.ReadLine();
-        }
+        //    consumer.Received += (model, ea) =>
+        //                    {
+        //                        return;
+        //                        //var body = ea.Body;
+        //                        //var reply = Encoding.UTF8.GetString(body);
+        //                        //Console.WriteLine("reply " + reply);
+        //                    };
+        //    Console.ReadLine();
+        //}
 
-        public void Call(byte[] message)
-        {
-            var corelationId = Guid.NewGuid().ToString();
-            var props = channel.CreateBasicProperties();
-            props.ReplyTo = Queues.ReponseQueue;
-            props.CorrelationId = corelationId;
+        //public void Call(byte[] message)
+        //{
+        //    var corelationId = Guid.NewGuid().ToString();
+        //    var props = channel.CreateBasicProperties();
+        //    props.ReplyTo = Queues.ReponseQueue;
+        //    props.CorrelationId = corelationId;
 
-            Console.WriteLine("Sending raw bytes.");
-            channel.BasicPublish(exchange: "", routingKey: Queues.MessageQueue, basicProperties: props, body: message);
-        }
+        //    Console.WriteLine("Sending raw bytes.");
+        //    channel.BasicPublish(exchange: "", routingKey: Queues.MessageQueue, basicProperties: props, body: message);
+        //}
 
         public void Call(UnitOfWork uow)
         {
@@ -76,6 +77,34 @@ namespace MQProducer.MQ
 
             Console.WriteLine(string.Format("Sending UOW: {0}", uow.ToString()));
             channel.BasicPublish(exchange: "", routingKey: Queues.MessageQueue, basicProperties: props, body: UnitOfWork.ToBytes(uow));
+
+            //while (!isNotified)
+            //{
+            //    consumer.Received += (model, ea) =>
+            //    {
+            //        isNotified = true;
+            //    //var body = ea.Body;
+            //    //var reply = Encoding.UTF8.GetString(body);
+            //    //Console.WriteLine("reply " + reply);
+            //};
+            //}
+            //Console.ReadLine();
+        }
+
+        public void WatiForNotification()
+        {
+            bool notified = false;
+
+            while (!notified)
+            {
+                consumer.Received += (model, ea) =>
+                {
+                    notified = true;
+                    //var body = ea.Body;
+                    //var reply = Encoding.UTF8.GetString(body);
+                    //Console.WriteLine("reply " + reply);
+                };
+            }
         }
 
         public void Dispose()
