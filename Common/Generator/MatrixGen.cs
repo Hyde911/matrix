@@ -7,33 +7,33 @@ namespace Common.Generator
     {
         private static Random rand = new Random();
 
-        public static int[][] GenerateMatix(int n, int m, int range)
+        public static double[][] GenerateMatix(int n, int m)
         {
-            int[][] result = new int[n][];
+            double[][] result = new double[n][];
 
             for (int i = 0; i < n; i++)
             {
-                result[i] = new int[m];
+                result[i] = new double[m];
                 for (int j = 0; j < m; j++)
                 {
-                    result[i][j] = rand.Next(range);
+                    result[i][j] = rand.NextDouble();
                 }
             }
 
             return result;
         }
 
-        public static int[][] GenerateMatix(int n, int range)
+        public static double[][] GenerateMatix(int n)
         {
-            return GenerateMatix(n, n, range);
+            return GenerateMatix(n, n);
         }
 
-        public static List<int[][]>GenerateMatrixForCalcuation(int n)
+        public static List<double[][]>GenerateMatrixForCalcuation(int n)
         {
-            List<int[][]> result = new List<int[][]>(3);
+            List<double[][]> result = new List<double[][]>(3);
             for (int i = 0; i < 3; i++)
             {
-                result.Add(GenerateMatix(n, 10));
+                result.Add(GenerateMatix(n));
             }
             return result;
         }

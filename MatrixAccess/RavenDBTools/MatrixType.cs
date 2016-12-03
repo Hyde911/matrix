@@ -4,12 +4,12 @@ namespace MatrixAccess.RavenDBTools
 {
     internal class MatrixType
     {
-        public List<int[][]> Data
+        public List<double[][]> Data
         {
             private set; get;
         }
 
-        public MatrixType(List<int[][]> data)
+        public MatrixType(List<double[][]> data)
         {
             Data = data;
         }

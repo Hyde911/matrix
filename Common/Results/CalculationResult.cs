@@ -7,7 +7,7 @@ namespace Common.Results
 {
     public class CalculationResult
     {
-        public int[] Result
+        public double[] Result
         {
             private set;
             get;
@@ -31,7 +31,7 @@ namespace Common.Results
             get;
         }
 
-        public CalculationResult(int[] result, int row, long time, string workerId)
+        public CalculationResult(double[] result, int row, long time, string workerId)
         {
             Result = result;
             Time = time;
@@ -62,7 +62,7 @@ namespace Common.Results
 
         public override int GetHashCode()
         {
-            return Result[Result.Count()] * 11 + (int)(Time * 7) + Row * 13;
+            return (int)Result[Result.Count()] * 11 + (int)(Time * 7) + Row * 13;
         }
 
         public override bool Equals(object obj)

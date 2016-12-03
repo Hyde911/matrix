@@ -1,5 +1,7 @@
 ﻿using DataGenerator.Container;
+using MQReceiver.Logger;
 using MQReceiver.MQ;
+using System.IO;
 
 namespace Receiver
 {
@@ -10,13 +12,19 @@ namespace Receiver
             //DependencyFactory factory = new DependencyFactory();
 
             //var serilaize = factory.Container
-
+            WorkerTimeLogger logger = new WorkerTimeLogger();
             MatrixAccessor inputContainer;
-                inputContainer = new MatrixAccessor();
-                using (MQClient client = new MQClient(inputContainer))
-                {
-                    client.Run();
-                }
+            inputContainer = new MatrixAccessor();
+            using (MQClient client = new MQClient(inputContainer, logger))
+            {
+                client.Run();
+            }
+            string path = @"D:\log.txt";
+            using (StreamWriter sw = new StreamWriter(path))
+            {
+                logger.SaveLog(sw);
+            }
+
         }
     }
 }

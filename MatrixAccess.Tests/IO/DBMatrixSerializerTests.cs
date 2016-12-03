@@ -28,33 +28,33 @@ namespace MatrixAccess.Tests.IO
         [Test]
         public void DBInputSerializerTest()
         {
-            List<int[][]> matrix = MatrixGen.GenerateMatrixForCalcuation(matrixSize);
+            List<double[][]> matrix = MatrixGen.GenerateMatrixForCalcuation(matrixSize);
 
             serializer.SaveInputMatrix(matrix);
 
-            List<int[][]> result = serializer.LoadInputMatrix();
+            List<double[][]> result = serializer.LoadInputMatrix();
             CollectionAssert.AreEqual(matrix, result);
         }
 
         [Test]
         public void DBIntermediateSerializerTest()
         {
-            List<int[][]> matrix = MatrixGen.GenerateMatrixForCalcuation(matrixSize);
+            List<double[][]> matrix = MatrixGen.GenerateMatrixForCalcuation(matrixSize);
             matrix = matrix.GetRange(0, 1);
             serializer.SaveIntermediateMatrix(matrix);
 
-            List<int[][]> result = serializer.LoadIntermediateMatrix();
+            List<double[][]> result = serializer.LoadIntermediateMatrix();
             CollectionAssert.AreEqual(matrix, result);
         }
 
         [Test]
         public void DBOutputSerializerTest()
         {
-            List<int[][]> matrix = MatrixGen.GenerateMatrixForCalcuation(matrixSize);
+            List<double[][]> matrix = MatrixGen.GenerateMatrixForCalcuation(matrixSize);
             matrix = matrix.GetRange(0, 1);
             serializer.SaveOutputMatrix(matrix);
 
-            List<int[][]> result = serializer.LoadOutputMatrix();
+            List<double[][]> result = serializer.LoadOutputMatrix();
             CollectionAssert.AreEqual(matrix, result);
         }
     }

@@ -4,20 +4,20 @@ using System.Linq;
 
 namespace Common.Tools
 {
-    public class MatrixCalculator
+    public static class MatrixCalculator
     {
-        private Stopwatch watch = new Stopwatch();
+        private static Stopwatch watch = new Stopwatch();
         /// <summary>
         /// calculates product of multiplication of vector and matrix
         /// </summary>
         /// <param name="m1"></param>
         /// <param name="m2"></param>
         /// <returns></returns>
-        public int[] CalculateRow(int[] m1, int[][] m2)
+        public static double[] CalculateRow(double[] m1, double[][] m2)
         {
             int rows = m1.Count();
             int columns = m2[0].Count();
-            int[] result = new int[columns];
+            double[] result = new double[columns];
 
                 for (int j = 0; j < columns; j++)
                 {
@@ -29,9 +29,9 @@ namespace Common.Tools
         return result;
         }
 
-        public CalculationResult DoCalculation(int[]m1, int[][]m2, string id, int row)
+        public static CalculationResult DoCalculation(double[]m1, double[][]m2, string id, int row)
         {
-            int[] result;
+            double[] result;
             watch.Reset();
             watch.Start();
             result = CalculateRow(m1, m2);

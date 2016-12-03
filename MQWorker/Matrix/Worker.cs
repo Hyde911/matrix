@@ -9,13 +9,13 @@ namespace MQWorker.Matrix
     public class Worker
     {
         private MatrixAccessor inputContainer;
-        private MatrixCalculator calculator;
+        //private MatrixCalculator calculator;
         private string id;
 
         public Worker(MatrixAccessor inputContainer)
         {
             this.inputContainer = inputContainer;
-            calculator = new MatrixCalculator();
+            //calculator = new MatrixCalculator();
             id = Guid.NewGuid().ToString();
             Console.WriteLine(string.Format( "Worker with id {0}, created...", id));
         }
@@ -25,15 +25,15 @@ namespace MQWorker.Matrix
             Console.WriteLine(string.Format("Received UOW: {0}, starting calculation...", uow.ToString()));
             if (!(uow.FirstMatrix == 1))
             {
-                return calculator.DoCalculation(GetVector(uow, true), GetSecondMatrix(uow), id, uow.Row);
+                return MatrixCalculator.DoCalculation(GetVector(uow, true), GetSecondMatrix(uow), id, uow.Row);
             }
             else
             {
-                return calculator.DoCalculation(GetVector(uow, false), GetSecondMatrix(uow), id, uow.Row);
+                return MatrixCalculator.DoCalculation(GetVector(uow, false), GetSecondMatrix(uow), id, uow.Row);
             }
         }
 
-        private int[] GetVector(UnitOfWork uow, bool intermediate)
+        private double[] GetVector(UnitOfWork uow, bool intermediate)
         {
             if (intermediate)
             {
@@ -45,7 +45,7 @@ namespace MQWorker.Matrix
             }
         }
 
-        private int[][] GetSecondMatrix(UnitOfWork uow)
+        private double[][] GetSecondMatrix(UnitOfWork uow)
         {
             return inputContainer.InputMatrix[uow.SecondMatrix];
         }

@@ -6,9 +6,9 @@ namespace Common.Tests.Results
     [TestFixture]
     public class ResultsTests
     {
-        private int[] ar1 = { 13, 86, 61, 3, 97 };
-        private int[] ar2 = { 76, 8, 19, 46, 7 };
-        private int[] ar3 = { 76, 8, 19, 46};
+        private double[] ar1 = { 13, 86, 61, 3, 97 };
+        private double[] ar2 = { 76, 8, 19, 46, 7 };
+        private double[] ar3 = { 76, 8, 19, 46};
         private string id1 = "id1";
         private string id2 = "id2";
         private int row = 1;

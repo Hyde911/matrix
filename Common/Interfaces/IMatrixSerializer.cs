@@ -5,17 +5,17 @@ namespace Common.Interfaces
 {
     public interface IMatrixSerializer : IDisposable
     {
-        void SaveInputMatrix(List<int[][]> matrix);
+        void SaveInputMatrix(List<double[][]> matrix);
 
-        void SaveIntermediateMatrix(List<int[][]> matrix);
+        void SaveIntermediateMatrix(List<double[][]> matrix);
 
-        void SaveOutputMatrix(List<int[][]> matrix);
+        void SaveOutputMatrix(List<double[][]> matrix);
 
-        List<int[][]> LoadInputMatrix();
+        List<double[][]> LoadInputMatrix();
 
-        List<int[][]> LoadIntermediateMatrix();
+        List<double[][]> LoadIntermediateMatrix();
 
-        List<int[][]> LoadOutputMatrix();
+        List<double[][]> LoadOutputMatrix();
 
         void DeleteInputMatrix();
         void DeleteIntermediateMatrix();

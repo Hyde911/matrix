@@ -1,6 +1,7 @@
 ﻿using Common.Consts;
 using Common.Results;
 using DataGenerator.Container;
+using MQReceiver.Logger;
 using MQReceiver.Matrix;
 using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
@@ -14,10 +15,12 @@ namespace MQReceiver.MQ
         private IModel channel;
         private EventingBasicConsumer consumer;
         private MatrixAssembler assembler;
+        private WorkerTimeLogger logger;
         private bool notifyProducer = false;
 
-        public MQClient(MatrixAccessor container)
+        public MQClient(MatrixAccessor container, WorkerTimeLogger logger)
         {
+            this.logger = logger;
             assembler = new MatrixAssembler(container);
 
             var factory = new ConnectionFactory()
@@ -51,7 +54,7 @@ namespace MQReceiver.MQ
                 var props = ea.BasicProperties;
                 var id = props.CorrelationId;
                 Console.WriteLine("Received result, adding to assembly");
-
+                logger.LogWorkerTime(result);
                 if (!notifyProducer && assembler.AddResult(result))
                 {
                     channel.BasicPublish(exchange: "", routingKey: Queues.NotificationQueue, body: new byte[] { 1 });

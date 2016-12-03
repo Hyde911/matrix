@@ -55,6 +55,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Logger\WorkerTimeLogger.cs" />
     <Compile Include="Matrix\MatrixAssembler.cs" />
     <Compile Include="MQ\MQClient.cs" />
     <Compile Include="Program.cs" />
