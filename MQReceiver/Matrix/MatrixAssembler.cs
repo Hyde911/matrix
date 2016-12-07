@@ -11,6 +11,14 @@ namespace MQReceiver.Matrix
         private Dictionary <int, float[]> results = new Dictionary<int, float[]>();
         List<float[][]> result = new List<float[][]>();
         private bool isOutput = false;
+        private bool finalAssembly = false;
+        public bool FinalAssembly
+        {
+            get
+            {
+                return finalAssembly;
+            }
+        }
 
         public MatrixAssembler(MatrixAccessor container)
         {
@@ -33,6 +41,7 @@ namespace MQReceiver.Matrix
                 else
                 {
                     container.SaveOutputMatrix(this.result);
+                    finalAssembly = true;
                     return isOutput;
                 }
                 return isOutput;

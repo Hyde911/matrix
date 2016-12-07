@@ -46,26 +46,32 @@ namespace MQReceiver.MQ
 
         public void Run()
         {
+            bool theEnd = false;
             Console.WriteLine("Receiver running...");
-            consumer.Received += (model, ea) =>
-            {
-                var body = ea.Body;
-                CalculationResult result = CalculationResult.GetFromBytes(ea.Body);
-                var props = ea.BasicProperties;
-                var id = props.CorrelationId;
-                if (result.Row % 32 == 0)
-                {
-                    Console.WriteLine(string.Format("Received result, adding to assembly. Row: {0}", result.Row));
-                }
-                logger.LogWorkerTime(result);
-                if (!notifyProducer && assembler.AddResult(result))
-                {
-                    channel.BasicPublish(exchange: "", routingKey: Queues.NotificationQueue, body: new byte[] { 1 });
-                }
 
-                channel.BasicAck(deliveryTag: ea.DeliveryTag, multiple: false);
-            };
-            Console.ReadLine();
+                consumer.Received += (model, ea) =>
+                {
+                    var body = ea.Body;
+                    CalculationResult result = CalculationResult.GetFromBytes(ea.Body);
+                    var props = ea.BasicProperties;
+                    var id = props.CorrelationId;
+                    if (result.Row % 32 == 0)
+                    {
+                        Console.WriteLine(string.Format("Received result, adding to assembly. Row: {0}", result.Row));
+                    }
+                    logger.LogWorkerTime(result);
+                    if (!notifyProducer && assembler.AddResult(result))
+                    {
+                        channel.BasicPublish(exchange: "", routingKey: Queues.NotificationQueue, body: new byte[] { 1 });
+                        theEnd = assembler.FinalAssembly;
+                    }
+
+                    channel.BasicAck(deliveryTag: ea.DeliveryTag, multiple: false);
+                };
+            while (!theEnd)
+            {
+
+            }
         }
 
 

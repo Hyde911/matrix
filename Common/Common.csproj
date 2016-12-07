@@ -60,6 +60,7 @@
     <Compile Include="Consts\Paths.cs" />
     <Compile Include="Consts\Queues.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Results\LogInfo.cs" />
     <Compile Include="Tools\MatrixCalculator.cs" />
     <Compile Include="UOW\UnitOfWork.cs" />
   </ItemGroup>

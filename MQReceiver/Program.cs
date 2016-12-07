@@ -1,6 +1,7 @@
 ﻿using DataGenerator.Container;
 using MQReceiver.Logger;
 using MQReceiver.MQ;
+using System;
 using System.IO;
 
 namespace Receiver
@@ -19,7 +20,7 @@ namespace Receiver
             {
                 client.Run();
             }
-            string path = @"D:\log.txt";
+            string path = Environment.CurrentDirectory + @"\log.txt";
             using (StreamWriter sw = new StreamWriter(path))
             {
                 logger.SaveLog(sw);
