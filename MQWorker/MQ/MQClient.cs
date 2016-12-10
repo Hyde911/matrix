@@ -50,7 +50,7 @@ namespace MQWorker.MQ
                var id = props.CorrelationId;
 
                channel.BasicAck(deliveryTag: ea.DeliveryTag, multiple: false);
-
+               var b = CalculationResult.ToBytes(result);
                channel.BasicPublish(exchange: "", routingKey: Queues.ReponseQueue, basicProperties: props, body: CalculationResult.ToBytes(result));
 
            };

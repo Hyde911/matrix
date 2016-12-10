@@ -8,10 +8,11 @@ namespace MQReceiver.Matrix
     public class MatrixAssembler
     {
         private MatrixAccessor container;
-        private Dictionary <int, float[]> results = new Dictionary<int, float[]>();
+        private Dictionary <int, float[]> tempResult = new Dictionary<int, float[]>();
         List<float[][]> result = new List<float[][]>();
-        private bool isOutput = false;
+        private bool isResult = false;
         private bool finalAssembly = false;
+        private bool intermediateResult = true;
         public bool FinalAssembly
         {
             get
@@ -27,27 +28,32 @@ namespace MQReceiver.Matrix
 
         public bool AddResult(CalculationResult result)
         {
-            if (results.Count() == container.Size - 1)
+            if (tempResult.Count() == 0)
             {
-                results.Add(result.Row, result.Result);
+                isResult = false;
+            }
+            if (tempResult.Count() == container.Size - 1)
+            {
+                tempResult.Add(result.Row, result.Result);
                 Assembly();
-                if (!isOutput)
+                isResult = true;
+                if (intermediateResult)
                 {
                     container.SaveIntermediateMatrix(this.result);
-                    isOutput = true;
-                    results.Clear();
+                    intermediateResult = false;
+                    tempResult.Clear();
                     this.result.Clear();
                 }
                 else
                 {
                     container.SaveOutputMatrix(this.result);
                     finalAssembly = true;
-                    return isOutput;
+                    this.result.Clear();
                 }
-                return isOutput;
+                return isResult;
             }
-            results.Add(result.Row, result.Result);
-            return isOutput;
+            tempResult.Add(result.Row, result.Result);
+            return isResult;
         }
 
         private void Assembly()
@@ -56,7 +62,7 @@ namespace MQReceiver.Matrix
 
             for (int i = 0; i < container.Size; i++)
             {
-                res[i] = results[i];
+                res[i] = tempResult[i];
             }
             result.Add(res);
         }

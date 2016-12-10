@@ -6,6 +6,7 @@ using MQReceiver.Matrix;
 using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
 using System;
+using System.Threading;
 
 namespace MQReceiver.MQ
 {
@@ -16,7 +17,6 @@ namespace MQReceiver.MQ
         private EventingBasicConsumer consumer;
         private MatrixAssembler assembler;
         private WorkerTimeLogger logger;
-        private bool notifyProducer = false;
 
         public MQClient(MatrixAccessor container, WorkerTimeLogger logger)
         {
@@ -35,7 +35,7 @@ namespace MQReceiver.MQ
             channel = connection.CreateModel();
             channel.QueueDeclare(queue: Queues.ReponseQueue, exclusive: false);
             channel.QueueDeclare(queue: Queues.NotificationQueue,
-                                             durable: false,
+                                             durable: true,
                                              exclusive: false,
                                              autoDelete: true,
                                              arguments: null);
@@ -60,7 +60,7 @@ namespace MQReceiver.MQ
                         Console.WriteLine(string.Format("Received result, adding to assembly. Row: {0}", result.Row));
                     }
                     logger.LogWorkerTime(result);
-                    if (!notifyProducer && assembler.AddResult(result))
+                    if (assembler.AddResult(result))
                     {
                         channel.BasicPublish(exchange: "", routingKey: Queues.NotificationQueue, body: new byte[] { 1 });
                         theEnd = assembler.FinalAssembly;
@@ -72,8 +72,8 @@ namespace MQReceiver.MQ
             {
 
             }
+            channel.BasicPublish(exchange: "", routingKey: Queues.NotificationQueue, body: new byte[] { 1 });
         }
-
 
         public void Dispose()
         {

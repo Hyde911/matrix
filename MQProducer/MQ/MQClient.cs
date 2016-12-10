@@ -11,7 +11,9 @@ namespace MQProducer.MQ
     {
         private IConnection connection;
         private IModel channel;
+        private IModel channelNotification;
         private EventingBasicConsumer consumer;
+
 
         public MQClient()
         {
@@ -25,48 +27,19 @@ namespace MQProducer.MQ
             };
             connection = factory.CreateConnection();
             channel = connection.CreateModel();
+            channelNotification = connection.CreateModel();
+
             channel.QueueDeclare(queue: Queues.MessageQueue, autoDelete:true, exclusive:false);
-            channel.QueueDeclare(queue: Queues.NotificationQueue,
-                                 durable: false,
+            channelNotification.QueueDeclare(queue: Queues.NotificationQueue,
+                                 durable: true,
                                  exclusive: false,
                                  autoDelete: true,
                                  arguments: null);
-            consumer = new EventingBasicConsumer(channel);
-            channel.BasicConsume(queue: Queues.NotificationQueue, noAck: true, consumer: consumer);
+            channelNotification.BasicQos(0, 1, false);
+            consumer = new EventingBasicConsumer(channelNotification);
+            channelNotification.BasicConsume(queue: Queues.NotificationQueue, noAck: true, consumer: consumer);
             
         }
-
-        //public void Call(string message, Action secondQueue)
-        //{
-        //    var corelationId = Guid.NewGuid().ToString();
-        //    var props = channel.CreateBasicProperties();
-        //    props.ReplyTo = Queues.ReponseQueue;
-        //    props.CorrelationId = corelationId;
-
-        //    var messageBytes = Encoding.UTF8.GetBytes(message);
-        //    Console.WriteLine(string.Format("sending {0}", message));
-        //    channel.BasicPublish(exchange: "", routingKey: Queues.MessageQueue, basicProperties: props, body: messageBytes);
-
-        //    consumer.Received += (model, ea) =>
-        //                    {
-        //                        return;
-        //                        //var body = ea.Body;
-        //                        //var reply = Encoding.UTF8.GetString(body);
-        //                        //Console.WriteLine("reply " + reply);
-        //                    };
-        //    Console.ReadLine();
-        //}
-
-        //public void Call(byte[] message)
-        //{
-        //    var corelationId = Guid.NewGuid().ToString();
-        //    var props = channel.CreateBasicProperties();
-        //    props.ReplyTo = Queues.ReponseQueue;
-        //    props.CorrelationId = corelationId;
-
-        //    Console.WriteLine("Sending raw bytes.");
-        //    channel.BasicPublish(exchange: "", routingKey: Queues.MessageQueue, basicProperties: props, body: message);
-        //}
 
         public void Call(UnitOfWork uow)
         {
@@ -74,21 +47,13 @@ namespace MQProducer.MQ
             var props = channel.CreateBasicProperties();
             props.ReplyTo = Queues.ReponseQueue;
             props.CorrelationId = corelationId;
-
-            Console.WriteLine(string.Format("Sending UOW: {0}", uow.ToString()));
+            var b = UnitOfWork.ToBytes(uow);
+            if (uow.Row % 32 == 0)
+            {
+                Console.WriteLine(string.Format("Sending UOW: {0}", uow.ToString()));
+            }
             channel.BasicPublish(exchange: "", routingKey: Queues.MessageQueue, basicProperties: props, body: UnitOfWork.ToBytes(uow));
 
-            //while (!isNotified)
-            //{
-            //    consumer.Received += (model, ea) =>
-            //    {
-            //        isNotified = true;
-            //    //var body = ea.Body;
-            //    //var reply = Encoding.UTF8.GetString(body);
-            //    //Console.WriteLine("reply " + reply);
-            //};
-            //}
-            //Console.ReadLine();
         }
 
         public void WatiForNotification()
@@ -100,9 +65,6 @@ namespace MQProducer.MQ
                 consumer.Received += (model, ea) =>
                 {
                     notified = true;
-                    //var body = ea.Body;
-                    //var reply = Encoding.UTF8.GetString(body);
-                    //Console.WriteLine("reply " + reply);
                 };
             }
         }
@@ -120,3 +82,4 @@ namespace MQProducer.MQ
         }
     }
 }
+

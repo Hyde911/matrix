@@ -9,13 +9,11 @@ namespace MQWorker.Matrix
     public class Worker
     {
         private MatrixAccessor inputContainer;
-        //private MatrixCalculator calculator;
         private string id;
 
         public Worker(MatrixAccessor inputContainer)
         {
             this.inputContainer = inputContainer;
-            //calculator = new MatrixCalculator();
             id = Guid.NewGuid().ToString();
             Console.WriteLine(string.Format( "Worker with id {0}, created...", id));
         }
